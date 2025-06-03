@@ -1,26 +1,15 @@
 package model;
 
+import java.util.List;
+
 public class Aluno extends Pessoa {
     private int idAluno;
+    private List<Materia> materias;
 
-    public Aluno(int idAluno, String nome, String anoNascimentoString, int idade) {
+    public Aluno(int idAluno, String nome, String anoNascimentoString, int idade, List<Materia> materias) {
         super(nome, anoNascimentoString, idade);
         this.idAluno = idAluno;
-    }
-
-    public static Aluno criarAluno(int idAluno, String nome, String anoNascimentoString, int idade)
-            throws IllegalArgumentException {
-        if (nome == null || nome.isEmpty()) {
-            throw new IllegalArgumentException("Nome precisa ser preenchido");
-        }
-
-        if (anoNascimentoString == null || anoNascimentoString.isEmpty()) {
-            throw new IllegalArgumentException("Ano de Nascimento precisa ser preenchido");
-        }
-
-        if (idade == null || idade.isEmpty()) {
-            throw new IllegalArgumentException("Idade precisa ser preenchido");
-        }
+        this.materias = materias;
     }
 
     public int getIdAluno() {
@@ -31,9 +20,16 @@ public class Aluno extends Pessoa {
         this.idAluno = idAluno;
     }
 
-    @Override
-    public String toString() {
-        return "Aluno [idAluno=" + idAluno + "]";
+    public List<Materia> getMaterias() {
+        return materias;
     }
 
+    public void setMaterias(List<Materia> materias) {
+        this.materias = materias;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", matérias=" + materias + "]";
+    }
 }

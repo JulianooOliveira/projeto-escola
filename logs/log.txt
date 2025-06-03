@@ -1,0 +1,8 @@
+Erro ao salvar professores: src\dados\professores.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar professores: src\dados\professores.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar professores: src\dados\professores.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar escolas: src\dados\escolas.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar escolas: src\dados\escolas.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar escolas: src\dados\escolas.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar escolas: src\dados\escolas.ser (O sistema não pode encontrar o caminho especificado)
+Erro ao salvar escolas: src\dados\escolas.ser (O sistema não pode encontrar o caminho especificado)
