@@ -3,10 +3,13 @@ import view.MenuPrincipal;
 
 public class App {
     public static void main(String[] args) {
-        // Inicializa o sistema de log
-        Log.configurarErro();
+        Log.configurarErro(); // redireciona logs de erro para o arquivo
 
-        // Inicia o menu principal do sistema
-        MenuPrincipal.exibir();
+        try {
+            MenuPrincipal.exibir(); // chama o menu principal
+        } catch (Exception e) {
+            System.err.println("Erro inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

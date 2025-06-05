@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 
 public class Professor extends Pessoa {
+    private static final long serialVersionUID = 1L;
+
     private int idProfessor;
     private List<Materia> materias; // vínculo obrigatório
 

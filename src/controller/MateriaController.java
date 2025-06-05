@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import dao.MateriaDAO;
+import model.Aluno;
 import model.Escola;
 import model.Materia;
+import model.Professor;
 
 public class MateriaController {
     private List<Materia> materias;
@@ -49,8 +51,19 @@ public class MateriaController {
         buscarMateriaPorId(id).ifPresent(m -> m.setNomeMateria(novoNome));
     }
 
-    public void deletarMateria(int id) {
-        materias.removeIf(m -> m.getIdMateria() == id);
+    public boolean deletarMateria(int id, List<Professor> professores, List<Aluno> alunos) {
+        boolean emUsoPorProf = professores.stream()
+                .anyMatch(p -> p.getMaterias().stream().anyMatch(m -> m.getIdMateria() == id));
+
+        boolean emUsoPorAluno = alunos.stream()
+                .anyMatch(a -> a.getMaterias().stream().anyMatch(m -> m.getIdMateria() == id));
+
+        if (emUsoPorProf || emUsoPorAluno) {
+            System.out.println("❌ Não é possível excluir a matéria. Está vinculada a professor ou aluno.");
+            return false;
+        }
+
+        return materias.removeIf(m -> m.getIdMateria() == id);
     }
 
     public List<Materia> getMaterias() {

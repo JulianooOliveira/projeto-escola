@@ -7,7 +7,7 @@ import java.util.List;
 import model.Aluno;
 
 public class AlunoDAO {
-    private static final String CAMINHO = "src/dados/alunos.ser";
+    private static final String CAMINHO = "dados/alunos.ser";
 
     public static void salvar(List<Aluno> alunos) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(CAMINHO))) {

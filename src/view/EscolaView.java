@@ -1,14 +1,19 @@
 package view;
 
 import controller.EscolaController;
+import controller.MateriaController;
 import model.Escola;
+import model.EstadoEnum;
+import model.Materia;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public abstract class EscolaView {
     public static void menu(Scanner in) {
+        System.out.println("\n>>> Entrou no menu de ESCOLAS <<<");
         List<Escola> escolas;
         try {
             escolas = EscolaController.carregar();
@@ -21,7 +26,7 @@ public abstract class EscolaView {
 
         boolean loop = true;
         while (loop) {
-            System.out.println("\n--- ESCOLAS ---");
+            System.out.println("\n🎓 --- GERENCIAMENTO DE ESCOLAS ---");
             System.out.println("1 - Cadastrar Escola");
             System.out.println("2 - Listar Escolas");
             System.out.println("3 - Editar Escola");
@@ -33,22 +38,88 @@ public abstract class EscolaView {
             switch (opcao) {
                 case "1" -> {
                     System.out.print("Nome da escola: ");
-                    controller.cadastrarEscola(in.nextLine());
+                    String nome = in.nextLine();
+
+                    System.out.println("Selecione o estado (PR ou SC):");
+                    for (EstadoEnum estado : EstadoEnum.values()) {
+                        System.out.println(estado.name() + " - " + estado.getNome());
+                    }
+
+                    System.out.print("Sigla do estado: ");
+                    String sigla = in.nextLine().trim().toUpperCase();
+
+                    try {
+                        EstadoEnum estado = EstadoEnum.fromSigla(sigla);
+                        Escola nova = controller.cadastrarEscola(nome, estado);
+                        System.out.println("✅ Escola criada com sucesso!");
+                        System.out.println("🆔 ID: " + nova.getId() +
+                                " | Nome: " + nova.getNome() +
+                                " | Estado: " + nova.getEstado().name());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("❌ Estado inválido. Use apenas PR ou SC.");
+                    }
                 }
-                case "2" -> controller.listarEscolas().forEach(System.out::println);
+
+                case "2" -> {
+                    System.out.println("📚 Lista de escolas:");
+                    List<Escola> lista = controller.listarEscolas();
+                    if (lista.isEmpty()) {
+                        System.out.println("📭 Nenhuma escola cadastrada.");
+                    } else {
+                        lista.forEach(e -> System.out.println("ID: " + e.getId() +
+                                " | Nome: " + e.getNome() +
+                                " | Estado: " + e.getEstado().name()));
+                    }
+                }
+
                 case "3" -> {
-                    System.out.print("Nome atual: ");
-                    String antigo = in.nextLine();
-                    System.out.print("Novo nome: ");
-                    String novo = in.nextLine();
-                    controller.editarEscola(antigo, novo);
+                    if (controller.listarEscolas().isEmpty()) {
+                        System.out.println("⚠️ Nenhuma escola cadastrada para editar.");
+                        break;
+                    }
+
+                    System.out.print("ID da escola a editar: ");
+                    int id = Integer.parseInt(in.nextLine());
+
+                    Optional<Escola> escolaOpt = controller.buscarEscolaPorId(id);
+                    if (escolaOpt.isPresent()) {
+                        System.out.print("Novo nome da escola: ");
+                        String novoNome = in.nextLine();
+                        controller.editarEscola(id, novoNome);
+                        System.out.println("✏️ Escola editada com sucesso!");
+                    } else {
+                        System.out.println("❌ Escola com ID " + id + " não encontrada.");
+                    }
                 }
+
                 case "4" -> {
-                    System.out.print("Nome da escola a deletar: ");
-                    controller.deletarEscola(in.nextLine());
+                    if (controller.listarEscolas().isEmpty()) {
+                        System.out.println("⚠️ Nenhuma escola cadastrada para deletar.");
+                        break;
+                    }
+
+                    System.out.print("ID da escola a deletar: ");
+                    int id = Integer.parseInt(in.nextLine());
+
+                    List<Materia> materias;
+                    try {
+                        materias = MateriaController.carregar();
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.err.println("Erro ao carregar matérias: " + e.getMessage());
+                        break;
+                    }
+
+                    if (controller.deletarEscola(id, materias)) {
+                        System.out.println("🗑️ Escola deletada com sucesso.");
+                    } else {
+                        System.out
+                                .println("❌ Escola com ID " + id + " não encontrada ou está vinculada a uma matéria.");
+                    }
                 }
+
                 case "0" -> loop = false;
-                default -> System.out.println("Opção inválida!");
+
+                default -> System.out.println("❌ Opção inválida! Tente novamente.");
             }
 
             try {

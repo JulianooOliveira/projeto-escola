@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import dao.EscolaDAO;
 import model.Escola;
+import model.EstadoEnum;
+import model.Materia;
 
 public class EscolaController {
     private List<Escola> escolas;
@@ -22,12 +24,20 @@ public class EscolaController {
         EscolaDAO.salvar(escolas);
     }
 
-    public void cadastrarEscola(String nome) {
-        escolas.add(new Escola(nome));
+    public Escola cadastrarEscola(String nome, EstadoEnum estado) {
+        Escola escola = new Escola(nome, estado);
+        escolas.add(escola);
+        return escola;
     }
 
     public List<Escola> listarEscolas() {
         return escolas;
+    }
+
+    public Optional<Escola> buscarEscolaPorId(int id) {
+        return escolas.stream()
+                .filter(e -> e.getId() == id)
+                .findFirst();
     }
 
     public Optional<Escola> buscarEscolaPorNome(String nome) {
@@ -36,12 +46,24 @@ public class EscolaController {
                 .findFirst();
     }
 
-    public void editarEscola(String nomeAntigo, String novoNome) {
-        buscarEscolaPorNome(nomeAntigo).ifPresent(e -> e.setNome(novoNome));
+    public void editarEscola(int id, String novoNome) {
+        buscarEscolaPorId(id).ifPresent(e -> e.setNome(novoNome));
     }
 
-    public void deletarEscola(String id) {
-        escolas.removeIf(e -> e.getNome().equalsIgnoreCase(id));
+    public boolean deletarEscola(int id, List<Materia> materias) {
+        Optional<Escola> escolaOpt = buscarEscolaPorId(id);
+        if (escolaOpt.isEmpty())
+            return false;
+
+        boolean emUso = materias.stream()
+                .anyMatch(m -> m.getEscola().getId() == id);
+
+        if (emUso) {
+            System.out.println("❌ Não é possível excluir a escola. Existem matérias vinculadas a ela.");
+            return false;
+        }
+
+        return escolas.removeIf(e -> e.getId() == id);
     }
 
     public List<Escola> getEscolas() {

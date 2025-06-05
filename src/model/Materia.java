@@ -1,9 +1,13 @@
 package model;
 
-public class Materia {
+import java.io.Serializable;
+
+public class Materia implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int idMateria;
     private String nomeMateria;
-    private Escola escola; // vínculo obrigatório
+    private Escola escola;
 
     public Materia(int idMateria, String nomeMateria, Escola escola) {
         this.idMateria = idMateria;

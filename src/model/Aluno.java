@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 
 public class Aluno extends Pessoa {
+    private static final long serialVersionUID = 1L;
+
     private int idAluno;
     private List<Materia> materias;
 
@@ -30,6 +32,6 @@ public class Aluno extends Pessoa {
 
     @Override
     public String toString() {
-        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", matérias=" + materias + "]";
+        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", idade=" + getIdade() + "]";
     }
 }
