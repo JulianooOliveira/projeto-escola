@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import dao.ProfessorDAO;
+import factory.ProfessorFactory;
 import model.Materia;
 import model.Professor;
 
@@ -23,9 +24,9 @@ public class ProfessorController {
         ProfessorDAO.salvar(professores);
     }
 
-    public void cadastrarProfessor(String nome, String anoNascimento, int idade, List<Materia> materias) {
+    public void cadastrarProfessor(String nome, String anoNascimento, List<Materia> materias) {
         int id = gerarId();
-        professores.add(new Professor(id, nome, anoNascimento, idade, materias));
+        professores.add(ProfessorFactory.criar(id, nome, anoNascimento, materias));
     }
 
     private int gerarId() {

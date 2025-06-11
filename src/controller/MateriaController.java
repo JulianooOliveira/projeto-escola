@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import dao.MateriaDAO;
+import factory.MateriaFactory;
 import model.Aluno;
 import model.Escola;
 import model.Materia;
@@ -27,7 +28,7 @@ public class MateriaController {
 
     public void cadastrarMateria(String nomeMateria, Escola escola) {
         int id = gerarId();
-        materias.add(new Materia(id, nomeMateria, escola));
+        materias.add(MateriaFactory.criar(id, nomeMateria, escola));
     }
 
     private int gerarId() {

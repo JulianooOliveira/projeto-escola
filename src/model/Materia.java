@@ -41,6 +41,6 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "Materia [idMateria=" + idMateria + ", nomeMateria=" + nomeMateria + ", escola=" + escola.getNome() + "]";
+        return "Materia [idMateria=" + idMateria + ", nomeMateria=" + nomeMateria + ", escola=" + (escola != null ? escola.getNome() : "Nenhuma") + "]";
     }
 }

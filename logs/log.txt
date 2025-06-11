@@ -1,8 +1,2 @@
-Erro inesperado: For input string: ""
-java.lang.NumberFormatException: For input string: ""
-	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
-	at java.base/java.lang.Integer.parseInt(Integer.java:541)
-	at java.base/java.lang.Integer.parseInt(Integer.java:661)
-	at view.MateriaView.menu(MateriaView.java:55)
-	at view.MenuPrincipal.exibir(MenuPrincipal.java:25)
-	at App.main(App.java:9)
+Erro ao acessar menu de alunos: Index: 2 Size: 2
+❌ Erro de entrada. Encerrando o sistema.

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import dao.EscolaDAO;
+import factory.EscolaFactory;
 import model.Escola;
 import model.EstadoEnum;
 import model.Materia;
@@ -25,7 +26,7 @@ public class EscolaController {
     }
 
     public Escola cadastrarEscola(String nome, EstadoEnum estado) {
-        Escola escola = new Escola(nome, estado);
+        Escola escola = EscolaFactory.criar(nome, estado);
         escolas.add(escola);
         return escola;
     }

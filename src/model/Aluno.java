@@ -8,8 +8,8 @@ public class Aluno extends Pessoa {
     private int idAluno;
     private List<Materia> materias;
 
-    public Aluno(int idAluno, String nome, String anoNascimentoString, int idade, List<Materia> materias) {
-        super(nome, anoNascimentoString, idade);
+    public Aluno(int idAluno, String nome, String anoNascimentoString, List<Materia> materias) {
+        super(nome, anoNascimentoString);
         this.idAluno = idAluno;
         this.materias = materias;
     }
@@ -18,7 +18,7 @@ public class Aluno extends Pessoa {
         return idAluno;
     }
 
-    public void setIdAluno(int idAluno) {
+    private void setIdAluno(int idAluno) {
         this.idAluno = idAluno;
     }
 
@@ -32,6 +32,6 @@ public class Aluno extends Pessoa {
 
     @Override
     public String toString() {
-        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", idade=" + getIdade() + "]";
+        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", " + materias.get(idAluno) + "]";
     }
 }
