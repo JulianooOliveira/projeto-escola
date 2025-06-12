@@ -1,2 +1,0 @@
-Erro ao acessar menu de alunos: Index: 2 Size: 2
-❌ Erro de entrada. Encerrando o sistema.

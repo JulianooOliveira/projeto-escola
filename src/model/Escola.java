@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 public class Escola implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static int contador = 1;
 
     private int id;
     private String nome;
     private EstadoEnum estado;
 
-    public Escola(String nome, EstadoEnum estado) {
-        this.id = contador++;
+    public Escola(int id, String nome, EstadoEnum estado) {
+        this.id = id;
         this.nome = nome;
         this.estado = estado;
     }

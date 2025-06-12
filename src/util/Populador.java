@@ -13,11 +13,11 @@ public abstract class Populador {
         try {
             // Criar escolas
             List<Escola> escolas = new ArrayList<>();
-            escolas.add(EscolaFactory.criar("Escola Alpha", EstadoEnum.PR));
-            escolas.add(EscolaFactory.criar("Escola Beta", EstadoEnum.SC));
-            escolas.add(EscolaFactory.criar("Escola Gama", EstadoEnum.PR));
-            escolas.add(EscolaFactory.criar("Escola Delta", EstadoEnum.SC));
-            escolas.add(EscolaFactory.criar("Escola Épsilon", EstadoEnum.PR));
+            escolas.add(EscolaFactory.criar(1, "Escola Alpha", EstadoEnum.PR));
+            escolas.add(EscolaFactory.criar(2, "Escola Beta", EstadoEnum.SC));
+            escolas.add(EscolaFactory.criar(3, "Escola Gama", EstadoEnum.PR));
+            escolas.add(EscolaFactory.criar(4, "Escola Delta", EstadoEnum.SC));
+            escolas.add(EscolaFactory.criar(5, "Escola Épsilon", EstadoEnum.PR));
             EscolaDAO.salvar(escolas);
 
             // Criar matérias

@@ -25,8 +25,16 @@ public class EscolaController {
         EscolaDAO.salvar(escolas);
     }
 
+    private int gerarId() {
+        return escolas.stream()
+                .mapToInt(Escola::getId)
+                .max()
+                .orElse(0) + 1;
+    }
+
     public Escola cadastrarEscola(String nome, EstadoEnum estado) {
-        Escola escola = EscolaFactory.criar(nome, estado);
+        int id = gerarId();
+        Escola escola = EscolaFactory.criar(id, nome, estado);
         escolas.add(escola);
         return escola;
     }
