@@ -39,7 +39,7 @@ public class AlunoController implements Salvavel {
         alunos.add(AlunoFactory.criar(id, nome, anoNascimento, materias));
     }
 
-    private int gerarId() {
+    public int gerarId() {
         return alunos.stream()
                 .mapToInt(Aluno::getIdAluno)
                 .max()

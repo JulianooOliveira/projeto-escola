@@ -10,8 +10,9 @@ import model.Aluno;
 import model.Escola;
 import model.Materia;
 import model.Professor;
+import util.Salvavel;
 
-public class MateriaController {
+public class MateriaController implements Salvavel {
     private List<Materia> materias;
 
     public MateriaController(List<Materia> materias) {
@@ -22,20 +23,29 @@ public class MateriaController {
         return MateriaDAO.carregar();
     }
 
+    @Override
     public void salvar() throws IOException {
+        if (materias == null || materias.isEmpty()) {
+            System.out.println("⚠️ Nenhuma matéria para salvar.");
+            return;
+        }
+        if (materias.stream().anyMatch(m -> m == null)) {
+            throw new IllegalStateException("A lista de matérias contém elementos nulos!");
+        }
         MateriaDAO.salvar(materias);
+
+    }
+
+    public int gerarId() {
+        return materias.stream()
+                .mapToInt(Materia::getIdMateria)
+                .max()
+                .orElse(0) + 1;
     }
 
     public void cadastrarMateria(String nomeMateria, Escola escola) {
         int id = gerarId();
         materias.add(MateriaFactory.criar(id, nomeMateria, escola));
-    }
-
-    private int gerarId() {
-        return materias.stream()
-                .mapToInt(Materia::getIdMateria)
-                .max()
-                .orElse(0) + 1;
     }
 
     public List<Materia> listarMaterias() {

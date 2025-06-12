@@ -18,10 +18,6 @@ public class Aluno extends Pessoa {
         return idAluno;
     }
 
-    private void setIdAluno(int idAluno) {
-        this.idAluno = idAluno;
-    }
-
     public List<Materia> getMaterias() {
         return materias;
     }

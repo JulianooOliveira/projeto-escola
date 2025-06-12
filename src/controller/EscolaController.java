@@ -9,8 +9,9 @@ import factory.EscolaFactory;
 import model.Escola;
 import model.EstadoEnum;
 import model.Materia;
+import util.Salvavel;
 
-public class EscolaController {
+public class EscolaController implements Salvavel {
     private List<Escola> escolas;
 
     public EscolaController(List<Escola> escolas) {
@@ -21,11 +22,19 @@ public class EscolaController {
         return EscolaDAO.carregar();
     }
 
+    @Override
     public void salvar() throws IOException {
+        if (escolas == null || escolas.isEmpty()) {
+            System.out.println("⚠️ Nenhuma escola para salvar.");
+            return;
+        }
+        if (escolas.stream().anyMatch(e -> e == null)) {
+            throw new IllegalStateException("A lista de escolas contém elementos nulos!");
+        }
         EscolaDAO.salvar(escolas);
     }
 
-    private int gerarId() {
+    public int gerarId() {
         return escolas.stream()
                 .mapToInt(Escola::getId)
                 .max()

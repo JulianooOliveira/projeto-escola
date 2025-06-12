@@ -34,16 +34,16 @@ public class ProfessorController implements Salvavel {
         System.out.println("✅ Professores salvos com sucesso.");
     }
 
-    public void cadastrarProfessor(String nome, String anoNascimento, List<Materia> materias) {
-        int id = gerarId();
-        professores.add(ProfessorFactory.criar(id, nome, anoNascimento, materias));
-    }
-
-    private int gerarId() {
+    public int gerarId() {
         return professores.stream()
                 .mapToInt(Professor::getIdProfessor)
                 .max()
                 .orElse(0) + 1;
+    }
+
+    public void cadastrarProfessor(String nome, String anoNascimento, List<Materia> materias) {
+        int id = gerarId();
+        professores.add(ProfessorFactory.criar(id, nome, anoNascimento, materias));
     }
 
     public List<Professor> listarProfessores() {
@@ -60,7 +60,6 @@ public class ProfessorController implements Salvavel {
         buscarProfessorPorId(id).ifPresent(p -> p.setNome(novoNome));
     }
 
-    // ✅ Polimorfismo de Sobrecarga
     public void editarProfessor(int id, String novoNome, List<Materia> novasMaterias) {
         buscarProfessorPorId(id).ifPresent(p -> {
             p.setNome(novoNome);
