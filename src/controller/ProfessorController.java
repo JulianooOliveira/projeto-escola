@@ -8,8 +8,9 @@ import dao.ProfessorDAO;
 import factory.ProfessorFactory;
 import model.Materia;
 import model.Professor;
+import util.Salvavel;
 
-public class ProfessorController {
+public class ProfessorController implements Salvavel {
     private List<Professor> professores;
 
     public ProfessorController(List<Professor> professores) {
@@ -20,8 +21,17 @@ public class ProfessorController {
         return ProfessorDAO.carregar();
     }
 
+    @Override
     public void salvar() throws IOException {
+        if (professores == null || professores.isEmpty()) {
+            System.out.println("⚠️ Nenhum professor para salvar.");
+            return;
+        }
+        if (professores.stream().anyMatch(p -> p == null)) {
+            throw new IllegalStateException("A lista de professores contém elementos nulos!");
+        }
         ProfessorDAO.salvar(professores);
+        System.out.println("✅ Professores salvos com sucesso.");
     }
 
     public void cadastrarProfessor(String nome, String anoNascimento, List<Materia> materias) {
@@ -48,6 +58,14 @@ public class ProfessorController {
 
     public void editarProfessor(int id, String novoNome) {
         buscarProfessorPorId(id).ifPresent(p -> p.setNome(novoNome));
+    }
+
+    // ✅ Polimorfismo de Sobrecarga
+    public void editarProfessor(int id, String novoNome, List<Materia> novasMaterias) {
+        buscarProfessorPorId(id).ifPresent(p -> {
+            p.setNome(novoNome);
+            p.setMaterias(novasMaterias);
+        });
     }
 
     public void deletarProfessor(int id) {

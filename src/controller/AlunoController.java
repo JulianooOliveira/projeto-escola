@@ -8,8 +8,9 @@ import dao.AlunoDAO;
 import factory.AlunoFactory;
 import model.Aluno;
 import model.Materia;
+import util.Salvavel;
 
-public class AlunoController {
+public class AlunoController implements Salvavel {
     private List<Aluno> alunos;
 
     public AlunoController(List<Aluno> alunos) {
@@ -20,8 +21,17 @@ public class AlunoController {
         return AlunoDAO.carregar();
     }
 
+    @Override
     public void salvar() throws IOException {
+        if (alunos == null || alunos.isEmpty()) {
+            System.out.println("⚠️ Nenhum aluno para salvar.");
+            return;
+        }
+        if (alunos.stream().anyMatch(a -> a == null)) {
+            throw new IllegalStateException("A lista de alunos contém elementos nulos!");
+        }
         AlunoDAO.salvar(alunos);
+        System.out.println("✅ Alunos salvos com sucesso.");
     }
 
     public void cadastrarAluno(String nome, String anoNascimento, List<Materia> materias) {

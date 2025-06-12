@@ -31,13 +31,7 @@ public class Professor extends Pessoa {
     }
 
     @Override
-    public String toString() {
-        String nomesMaterias = materias.stream()
-                .map(Materia::getNomeMateria)
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("Nenhuma");
-
-        return "Professor [id=" + idProfessor + ", nome=" + getNome() + ", matérias=" + nomesMaterias + "]";
+    public String getIdentificacao() {
+        return "Professor ID: " + idProfessor;
     }
-
 }

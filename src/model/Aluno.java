@@ -31,7 +31,7 @@ public class Aluno extends Pessoa {
     }
 
     @Override
-    public String toString() {
-        return "Aluno [idAluno=" + idAluno + ", nome=" + getNome() + ", " + materias.get(idAluno) + "]";
+    public String getIdentificacao() {
+        return "Aluno ID: " + idAluno;
     }
 }
